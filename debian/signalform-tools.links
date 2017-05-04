@@ -1,1 +1,1 @@
-opt/venvs/signalform-tools/bin/run-signalform-tools usr/bin/run-signalform-tools
+opt/venvs/signalform-tools/bin/signalform-tools usr/bin/signalform-tools

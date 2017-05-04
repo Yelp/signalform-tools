@@ -1,9 +1,9 @@
 Source: signalform-tools
-Maintainer: Your Name Here <you@yelp.com>
+Maintainer: Team Metrics <team-metrics@yelp.com>
 Build-Depends:
     dh-virtualenv,
 
 Package: signalform-tools
-Depends: python2.7, ${misc:Depends}, ${python:Depends}, ${shlibs:Depends}
+Depends: python3.4, ${misc:Depends}, ${python:Depends}, ${shlibs:Depends}
 Architecture: any
-Description:
+Description: Signalform command line with useful tools.

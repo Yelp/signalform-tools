@@ -1,7 +1,5 @@
 #!/bin/bash
 
-set -euxo pipefail
-
 cd /
 
 highlight() {
@@ -30,8 +28,5 @@ highlight_exec apt-get update
 
 # The package should install ok
 highlight_exec apt-get install -y --force-yes "${PACKAGE_NAME}=${PACKAGE_VERSION}"
-
-# TODO: implement your integration tests for Ubuntu here.
-highlight_exec /usr/bin/run-signalform-tools
 
 highlight "$0:" 'success!'

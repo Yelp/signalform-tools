@@ -1,0 +1,5 @@
+signalform-tools (0.0.1) lucid trusty; urgency=low
+
+  * Initial release. 
+
+ -- Francesco Di Chiara <fdc@yelp.com>  Thu, 04 May 2017 14:14:05 -0700
