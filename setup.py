@@ -15,10 +15,16 @@ setup(
     packages=find_packages(exclude=["tests"]),
     setup_requires=['setuptools'],
     include_package_data=True,
-    install_requires=[],
+    install_requires=[
+        'mypy',
+        'requests',
+        'flake8',
+        'pre-commit',
+        'python-dateutil'
+    ],
     entry_points={
         'console_scripts': [
-            'run-signalform-tools=signalform_tools.program:main',
+            'signalform-tools=signalform_tools.signalform:main',
         ],
     },
 )
