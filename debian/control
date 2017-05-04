@@ -1,0 +1,9 @@
+Source: signalform-tools
+Maintainer: Your Name Here <you@yelp.com>
+Build-Depends:
+    dh-virtualenv,
+
+Package: signalform-tools
+Depends: python2.7, ${misc:Depends}, ${python:Depends}, ${shlibs:Depends}
+Architecture: any
+Description:
