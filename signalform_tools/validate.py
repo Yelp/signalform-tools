@@ -42,8 +42,7 @@ def validate(resource: T, rules: Iterable[ValidationRule]) -> Optional[str]:
     violations = [rule(resource) for rule in rules]
     violations = [v for v in violations if v]
     if violations:
-        return "\n\t".join((f"{resource.type} - {resource.name}:",
-                            *violations))
+        return "\n\t".join((f"{resource.type} - {resource.name}:", *violations))
     return None
 
 
@@ -57,8 +56,7 @@ class Resource:
 
     @classmethod
     def from_config(self, config: List[str]) -> 'Resource':
-        raise NotImplementedError("Resource cannot \
-                                  be instantiated directly from config")
+        raise NotImplementedError("Resource cannot be instantiated directly from config")
 
     @classmethod
     def register_parsing_rule(cls, rule: ParsingRule) -> None:
@@ -91,24 +89,21 @@ class SignalFlowResource(Resource):
     parsing_rules: Set[ParsingRule] = set()
     validation_rules: Set[ValidationRule] = set()
 
-    def __init__(self, type: str, name: str, program_text: str,
-                 max_delay: Optional[int]=None) -> None:
+    def __init__(self, type: str, name: str, program_text: str, max_delay: Optional[int]=None) -> None:
         super().__init__(type, name)
         self.program_text = program_text
         self.max_delay = max_delay
 
     @classmethod
     def from_config(self, config: List[str]) -> 'SignalFlowResource':
-        raise NotImplementedError("SignalFlowResource cannot be \
-                                  instantiated directly from config")
+        raise NotImplementedError("SignalFlowResource cannot be instantiated directly from config")
 
     @classmethod
     def get_parsing_rules(cls) -> Set[ParsingRule]:
         return SignalFlowResource.parsing_rules | super().get_parsing_rules()
 
     def get_validation_rules(self) -> Set[ValidationRule]:
-        return SignalFlowResource.validation_rules | \
-            super().get_validation_rules()
+        return SignalFlowResource.validation_rules | super().get_validation_rules()
 
     @classmethod
     def parse(cls, line: str) -> List[Property]:
@@ -122,24 +117,19 @@ class Detector(SignalFlowResource):
     parsing_rules: Set[ParsingRule] = set()
     validation_rules: Set[ValidationRule] = set()
 
-    def __init__(self, name: str, program_text: str,
-                 max_delay: Optional[int]=None,
-                 detect_labels: Optional[Set[str]]=None) -> None:
+    def __init__(self, name: str, program_text: str, max_delay: Optional[int]=None, detect_labels: Optional[Set[str]]=None) -> None:
         super().__init__("detector", name, program_text, max_delay)
         self.detect_labels = detect_labels or set()
 
     @classmethod
     def from_config(cls, config: List[str]) -> 'Detector':
         properties = cls.parse_config(config)
-        detect_labels = {value for key,
-                         value in properties if key == "detect_label"}
+        detect_labels = {value for key, value in properties if key == "detect_label"}
         fields = dict(properties)
         try:
-            return Detector(fields["name"], fields["program_text"],
-                            fields.get("max_delay"), detect_labels)
+            return Detector(fields["name"], fields["program_text"], fields.get("max_delay"), detect_labels)
         except KeyError as e:
-            raise ValueError(f"Required field '{e.args[0]}' \
-                             missing for detector") from e
+            raise ValueError(f"Required field '{e.args[0]}' missing for detector") from e
 
     @classmethod
     def get_parsing_rules(cls) -> Set[ParsingRule]:
@@ -160,19 +150,16 @@ class Chart(SignalFlowResource):
     parsing_rules: Set[ParsingRule] = set()
     validation_rules: Set[ValidationRule] = set()
 
-    def __init__(self, name: str, program_text: str,
-                 max_delay: Optional[int]=None) -> None:
+    def __init__(self, name: str, program_text: str, max_delay: Optional[int]=None) -> None:
         super().__init__("chart", name, program_text, max_delay)
 
     @classmethod
     def from_config(cls, config: List[str]) -> 'Chart':
         fields = dict(cls.parse_config(config))
         try:
-            return Chart(fields["name"], fields["program_text"],
-                         fields.get("max_delay"))
+            return Chart(fields["name"], fields["program_text"], fields.get("max_delay"))
         except KeyError as e:
-            raise ValueError(f"Required field '{e.args[0]}' \
-                             missing for chart") from e
+            raise ValueError(f"Required field '{e.args[0]}' missing for chart") from e
 
     @classmethod
     def get_parsing_rules(cls) -> Set[ParsingRule]:
@@ -202,8 +189,7 @@ class Dashboard(Resource):
         try:
             return Dashboard(fields["name"])
         except KeyError as e:
-            raise ValueError(f"Required field '{e.args[0]}' \
-                             missing for dashboard") from e
+            raise ValueError(f"Required field '{e.args[0]}' missing for dashboard") from e
 
     @classmethod
     def get_parsing_rules(cls) -> Set[ParsingRule]:
@@ -233,8 +219,7 @@ class DashboardGroup(Resource):
         try:
             return DashboardGroup(fields["name"])
         except KeyError as e:
-            raise ValueError(f"Required field '{e.args[0]}' \
-                             missing for dashboard group") from e
+            raise ValueError(f"Required field '{e.args[0]}' missing for dashboard group") from e
 
     @classmethod
     def get_parsing_rules(cls) -> Set[ParsingRule]:
@@ -263,8 +248,7 @@ AVAILABLE_RESOURCES: Dict[str, Type[Resource]] = {
 }
 
 
-def find_and_make_resource(available_resources: Dict[str, Type[Resource]],
-                           res_type: str, lines: List[str]) -> Resource:
+def find_and_make_resource(available_resources: Dict[str, Type[Resource]], res_type: str, lines: List[str]) -> Resource:
     """Make a resource out of Terraform configs
     :raise: ValueError if unrecognized resource
     """
@@ -274,7 +258,7 @@ def find_and_make_resource(available_resources: Dict[str, Type[Resource]],
         raise ValueError(f"Unrecognized resource type: {res_type}")
 
 
-RESOURCE_RE = re.compile(r"""^resource\s*[\'\"](?P<res_type>\w+)[\'\"]\s*[\'\"](?P<name>\w+)[\'\"]""")
+RESOURCE_RE = re.compile(r"^resource\s*[\'\"](?P<res_type>\w+)[\'\"]\s*[\'\"](?P<name>\w+)[\'\"]")
 
 
 def parse_type(line: str) -> str:
@@ -283,9 +267,7 @@ def parse_type(line: str) -> str:
     return match.group("res_type") if match else None
 
 
-def register_parsing_rule(*resources:
-                          Type[Resource]
-                          ) -> Callable[[ParsingRule], ParsingRule]:
+def register_parsing_rule(*resources: Type[Resource]) -> Callable[[ParsingRule], ParsingRule]:
     """Decorator to associate parsing rules to resources"""
     def decorator(rule: ParsingRule) -> ParsingRule:
         for resource in resources:
@@ -295,9 +277,7 @@ def register_parsing_rule(*resources:
     return decorator
 
 
-def register_validation_rule(*resources:
-                             Type[Resource]
-                             ) -> Callable[[ValidationRule], ValidationRule]:
+def register_validation_rule(*resources: Type[Resource]) -> Callable[[ValidationRule], ValidationRule]:
     """Decorator to associate validation rules to resources"""
     def decorator(rule: ValidationRule) -> ValidationRule:
         for resource in resources:
@@ -413,8 +393,7 @@ def compact_heredoc(lines: List[str]) -> List[str]:
         for i, line in enumerate(lines[start + 1:]):
             if EOF_REGEX.match(line):
                 return i + start + 1
-        raise ValueError(f"Here-doc inputs are not properly delimited. \
-                         Can't find end delimiter for: {eof}")
+        raise ValueError(f"Here-doc inputs are not properly delimited. Can't find end delimiter for: {eof}")
 
     start_end = [(start, find_end(eof, start)) for start, eof in start_eof]
 
@@ -430,8 +409,7 @@ def compact_heredoc(lines: List[str]) -> List[str]:
 
     heredoc_state = [heredoc_where(i) for i in range(len(lines))]
 
-    def compact(compacted: List[str],
-                indexed_line: Tuple[int, str]) -> List[str]:
+    def compact(compacted: List[str], indexed_line: Tuple[int, str]) -> List[str]:
         index, line = indexed_line
         state = heredoc_state[index]
         if state == Heredoc.NO:
@@ -464,9 +442,7 @@ def clean_conf(tf_conf: IO[Any]) -> List[str]:
 
 # Main logic
 
-def parse_resources(tf_conf: IO[Any],
-                    available_resources: Dict[str, Type[Resource]]
-                    ) -> List[Resource]:
+def parse_resources(tf_conf: IO[Any], available_resources: Dict[str, Type[Resource]]) -> List[Resource]:
     """Parse resources out from the configuration"""
     lines = clean_conf(tf_conf)
     types = [parse_type(line) for line in lines]
@@ -478,9 +454,7 @@ def parse_resources(tf_conf: IO[Any],
     return resources
 
 
-def validate_config(tf_conf: IO[Any],
-                    available_resources: Dict[str, Type[Resource]]
-                    ) -> int:
+def validate_config(tf_conf: IO[Any], available_resources: Dict[str, Type[Resource]]) -> int:
     """Parse and validate resource starting from a terraform configuration
     :side effect: print warnings
     """
@@ -492,9 +466,7 @@ def validate_config(tf_conf: IO[Any],
     return len(warnings)
 
 
-def validate_file(filename: str,
-                  available_resources: Dict[str, Type[Resource]]
-                  ) -> int:
+def validate_file(filename: str, available_resources: Dict[str, Type[Resource]]) -> int:
     with open(filename) as tf_conf:
         return validate_config(tf_conf, available_resources)
 
@@ -509,11 +481,6 @@ def list_filenames(directory: str) -> List[str]:
 
 
 def validate_signalform(args):
-    print(args.filenames)
-    print(args.dir)
     filenames = args.filenames if args.filenames else list_filenames(args.dir)
-    retvalue = sum(validate_file(
-        filename,
-        AVAILABLE_RESOURCES
-    ) for filename in filenames)
+    retvalue = sum(validate_file(filename, AVAILABLE_RESOURCES) for filename in filenames)
     exit(retvalue)

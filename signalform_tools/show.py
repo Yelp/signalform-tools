@@ -22,8 +22,7 @@ def show(resource):
         res_type = TYPE_MAPPING[resource['type']]
         print(res_type)
         print(resource['primary']['attributes']['name'])
-        url = SIGNALFX_API + res_type \
-            + '/' + resource['primary']['attributes']['id']
+        url = SIGNALFX_API + res_type + '/' + resource['primary']['attributes']['id']
         if res_type == 'detector':
             url += '/edit'
         print(url + '\n')
@@ -32,8 +31,7 @@ def show(resource):
 
 
 def parse_resources(state):
-    return chain.from_iterable(module['resources'].values()
-                               for module in state['modules'])
+    return chain.from_iterable(module['resources'].values() for module in state['modules'])
 
 
 def parse_state(state_file):
