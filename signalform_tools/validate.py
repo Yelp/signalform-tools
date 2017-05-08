@@ -274,8 +274,7 @@ def find_and_make_resource(available_resources: Dict[str, Type[Resource]],
         raise ValueError(f"Unrecognized resource type: {res_type}")
 
 
-RESOURCE_RE = re.compile(r"^resource\s*[\'\"](?P<res_type>\w+) \
-                         [\'\"]\s*[\'\"](?P<name>\w+)[\'\"]")
+RESOURCE_RE = re.compile(r"""^resource\s*[\'\"](?P<res_type>\w+)[\'\"]\s*[\'\"](?P<name>\w+)[\'\"]""")
 
 
 def parse_type(line: str) -> str:
