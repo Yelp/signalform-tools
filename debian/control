@@ -4,6 +4,6 @@ Build-Depends:
     dh-virtualenv,
 
 Package: signalform-tools
-Depends: python3.4, ${misc:Depends}, ${python:Depends}, ${shlibs:Depends}
+Depends: python3.6, ${misc:Depends}, ${python:Depends}, ${shlibs:Depends}
 Architecture: any
 Description: Signalform command line with useful tools.
