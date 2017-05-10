@@ -1,5 +1,5 @@
 Source: signalform-tools
-Maintainer: Team Metrics <team-metrics@yelp.com>
+Maintainer: Metrics <team-metrics@yelp.com>
 Build-Depends:
     dh-virtualenv,
 
