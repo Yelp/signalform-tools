@@ -30,6 +30,16 @@ def parse_args():
                                  default=os.getcwd())
     parser_validate.set_defaults(func=validate_signalform)
 
+    parser_preflight = subparsers.add_parser(
+        'preflight',
+        help='preflight help',
+        description='Test your detector.')
+    parser_preflight.add_argument('file', help='You do not have to specify this, use state=plan or state=apply', type=str)
+    parser_preflight.add_argument('--label', help='Specific detect label to test, checks all in the current folder by default', type=str)
+    parser_preflight.add_argument('--start', help='Start time to check from. Can be either SignalFx relative time format (e.g. "-60m", "-3d", "-1w"), a date or a UNIX epoch timestamp in seconds or milliseconds', type=str)
+    parser_preflight.add_argument('--stop', help='End time to check until. Can be either SignalFx relative time format (e.g. "Now", "-60m", "-3d"), a date or a UNIX epoch timestamp in seconds or milliseconds', type=str)parser.add_argument('file', help='You do not have to specify this, use state=plan or state=apply', type=str)
+    parser_preflight.set_defaults(func=preflight_signalform)
+
     parser_show = subparsers.add_parser(
         'show',
         help='show help',
