@@ -1,3 +1,9 @@
+signalform-tools (0.0.2) lucid trusty; urgency=low
+
+  * Add new subcommand; preflight. 
+
+ -- Francesco Di Chiara <fdc@yelp.com>  Wed, 10 May 2017 06:33:00 -0700
+
 signalform-tools (0.0.1) lucid trusty; urgency=low
 
   * Initial release. 
