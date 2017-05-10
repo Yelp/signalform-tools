@@ -3,8 +3,9 @@ import argparse
 import os
 
 from signalform_tools.__about__ import __version__
-from signalform_tools.validate import validate_signalform
+from signalform_tools.preflight import preflight_signalform
 from signalform_tools.show import show_signalform
+from signalform_tools.validate import validate_signalform
 
 
 def parse_args():
@@ -37,7 +38,7 @@ def parse_args():
     parser_preflight.add_argument('file', help='You do not have to specify this, use state=plan or state=apply', type=str)
     parser_preflight.add_argument('--label', help='Specific detect label to test, checks all in the current folder by default', type=str)
     parser_preflight.add_argument('--start', help='Start time to check from. Can be either SignalFx relative time format (e.g. "-60m", "-3d", "-1w"), a date or a UNIX epoch timestamp in seconds or milliseconds', type=str)
-    parser_preflight.add_argument('--stop', help='End time to check until. Can be either SignalFx relative time format (e.g. "Now", "-60m", "-3d"), a date or a UNIX epoch timestamp in seconds or milliseconds', type=str)parser.add_argument('file', help='You do not have to specify this, use state=plan or state=apply', type=str)
+    parser_preflight.add_argument('--stop', help='End time to check until. Can be either SignalFx relative time format (e.g. "Now", "-60m", "-3d"), a date or a UNIX epoch timestamp in seconds or milliseconds', type=str)
     parser_preflight.set_defaults(func=preflight_signalform)
 
     parser_show = subparsers.add_parser(
