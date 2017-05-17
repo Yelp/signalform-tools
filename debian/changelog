@@ -1,3 +1,9 @@
+signalform-tools (0.0.3) lucid; urgency=low
+
+  * Fix string escaping 
+
+ -- Yashashree Kokje <kokje@yelp.com>  Wed, 17 May 2017 16:00:42 -0700
+
 signalform-tools (0.0.2) lucid trusty; urgency=low
 
   * Add new subcommand; preflight. 
