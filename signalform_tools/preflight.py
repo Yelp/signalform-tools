@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import codecs
 import datetime
 import json
 import re
@@ -166,4 +167,4 @@ def preflight_signalform(args):
     detectors = extract_program_text(args.file)
     for detector in detectors:
         if args.label in detector or args.label == 'ALL':
-            send_to_sfx(detector, start, stop)
+            send_to_sfx(codecs.decode(detector, 'unicode_escape'), start, stop)
