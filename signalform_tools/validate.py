@@ -176,6 +176,36 @@ class Chart(SignalFlowResource):
         return validate(self, self.get_validation_rules())
 
 
+class TextNote(Resource):
+    parsing_rules: Set[ParsingRule] = set()
+    validation_rules: Set[ValidationRule] = set()
+
+    def __init__(self, name: str) -> None:
+        super().__init__("text_note", name)
+
+    @classmethod
+    def from_config(cls, config: List[str]) -> 'TextNote':
+        fields = dict(cls.parse_config(config))
+        try:
+            return TextNote(fields["name"])
+        except KeyError as e:
+            raise ValueError(f"Required field '{e.args[0]}' missing for text note") from e
+
+    @classmethod
+    def get_parsing_rules(cls) -> Set[ParsingRule]:
+        return TextNote.parsing_rules | super().get_parsing_rules()
+
+    def get_validation_rules(self) -> Set[ValidationRule]:
+        return TextNote.validation_rules | super().get_validation_rules()
+
+    @classmethod
+    def parse(cls, line: str) -> List[Property]:
+        return parse(line, cls.get_parsing_rules())
+
+    def validate(self) -> Optional[str]:
+        return validate(self, self.get_validation_rules())
+
+
 class Dashboard(Resource):
     parsing_rules: Set[ParsingRule] = set()
     validation_rules: Set[ValidationRule] = set()
@@ -242,7 +272,7 @@ AVAILABLE_RESOURCES: Dict[str, Type[Resource]] = {
     "signalform_heatmap_chart": Chart,
     "signalform_single_value_chart": Chart,
     "signalform_list_chart": Chart,
-    "signalform_text_chart": Chart,
+    "signalform_text_chart": TextNote,
     "signalform_dashboard": Dashboard,
     "signalform_dashboard_group": DashboardGroup,
 }
