@@ -16,6 +16,7 @@ setup(
     setup_requires=['setuptools'],
     include_package_data=True,
     install_requires=[
+        'boto3',
         'mypy',
         'requests',
         'flake8',

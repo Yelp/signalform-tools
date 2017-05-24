@@ -2,11 +2,13 @@
 import codecs
 import datetime
 import json
+import os
 import re
 import time
 from typing import Dict
 from typing import List
 from typing import Tuple
+from utils import download_tfstate
 
 import dateutil.parser
 import requests
@@ -163,8 +165,26 @@ def interpret_interval(args) -> Tuple[int, int]:
 
 
 def preflight_signalform(args):
+    if args.file:
+        filename = args.file
+    elif args.remote:
+        try:
+            download_tfstate()
+        except ValueError:
+            print('Error downloading remote state')
+            return
+        filename = os.getcwd() + "/terraform.tfstate"
+    else:
+        print('No file found!')
+        return
+
+    detectors = extract_program_text(filename)
     start, stop = interpret_interval(args)
-    detectors = extract_program_text(args.file)
     for detector in detectors:
         if args.label in detector or args.label == 'ALL':
             send_to_sfx(codecs.decode(detector, 'unicode_escape'), start, stop)
+    try:
+        if args.remote:
+            os.remove(filename)
+    except OSError:
+        print('Impossible removing file terraform.tfstate')
