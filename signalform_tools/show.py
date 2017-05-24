@@ -2,7 +2,8 @@
 import json
 from itertools import chain
 import os
-from utils import download_tfstate
+
+from signalform_tools.utils import download_tfstate
 
 
 SIGNALFX_API = 'https://app.signalfx.com/#/'

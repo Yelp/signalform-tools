@@ -8,10 +8,10 @@ import time
 from typing import Dict
 from typing import List
 from typing import Tuple
-from utils import download_tfstate
 
 import dateutil.parser
 import requests
+from signalform_tools.utils import download_tfstate
 
 
 SFX_ENDPOINT = 'https://stream.signalfx.com/v2/signalflow/preflight?'
