@@ -457,9 +457,17 @@ def compact_heredoc(lines: List[str]) -> List[str]:
 
 def strip_comments(line: str) -> str:
     """Remove comments from line"""
+    # comment at the beginning of the line
     if line.startswith("#"):
         return ""
-    return line.rsplit("#", 1)[0].strip()
+
+    # in-line comment
+    left = line.rsplit("#", 1)[0]
+    # be sure we are not inside a string
+    if left.count('"') % 2 == 0 and left.count("'") % 2 == 0:
+        return left.strip()
+
+    return line
 
 
 def clean_conf(tf_conf: IO[Any]) -> List[str]:
