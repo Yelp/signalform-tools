@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 import json
 from itertools import chain
-import os
 
 from signalform_tools.utils import download_tfstate
 
@@ -37,23 +36,21 @@ def parse_resources(state):
     return chain.from_iterable(module['resources'].values() for module in state['modules'])
 
 
-def parse_state(state_file):
-    state = json.load(state_file)
-    resources = parse_resources(state)
-    [show(resource) for resource in resources]
+def parse_state():
+    with open("terraform.tfstate", "r") as state_file:
+        state = json.load(state_file)
+        resources = parse_resources(state)
+        [show(resource) for resource in resources]
 
 
 def show_signalform(args):
     try:
         if args.remote:
-            download_tfstate()
-        with open("terraform.tfstate", "r") as state:
-            parse_state(state)
-        if args.remote:
-            os.remove("terraform.tfstate")
+            with download_tfstate():
+                parse_state()
+                return
+        parse_state()
     except FileNotFoundError:
         print('No state')
-    except OSError:
-        print('Impossible removing file terraform.tfstate')
-    except ValueError:
-        print('Error downloading remote state')
+    except ValueError as err:
+        print(err.args[0])

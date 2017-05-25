@@ -166,27 +166,23 @@ def interpret_interval(args) -> Tuple[int, int]:
     return start, stop
 
 
+def preflight(filename, start, stop, label):
+    detectors = extract_program_text(filename)
+    for detector in detectors:
+        if label in detector or label == 'ALL':
+            send_to_sfx(codecs.decode(detector, 'unicode_escape'), start, stop)
+
+
 def preflight_signalform(args):
+    start, stop = interpret_interval(args)
+
     if args.file:
-        filename = args.file
+        preflight(args.file, start, stop, args.label)
     elif args.remote:
         try:
-            download_tfstate()
-        except ValueError:
-            print('Error downloading remote state')
-            return
-        filename = os.getcwd() + "/terraform.tfstate"
+            with download_tfstate():
+                preflight("/".join((os.getcwd(), "terraform.tfstate")), start, stop, args.label)
+        except ValueError as err:
+            print(err.args[0])
     else:
         print('No file found!')
-        return
-
-    detectors = extract_program_text(filename)
-    start, stop = interpret_interval(args)
-    for detector in detectors:
-        if args.label in detector or args.label == 'ALL':
-            send_to_sfx(codecs.decode(detector, 'unicode_escape'), start, stop)
-    try:
-        if args.remote:
-            os.remove(filename)
-    except OSError:
-        print('Impossible removing file terraform.tfstate')
