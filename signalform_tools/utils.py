@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import boto3
 from contextlib import contextmanager
+from contextlib import suppress
 import os
 import subprocess
 
@@ -40,4 +41,5 @@ def download_tfstate():
     except OSError:
         print("Impossible downloading file")
     finally:
-        os.remove(tfstate)
+        with suppress(FileNotFoundError):
+            os.remove(tfstate)
