@@ -1,3 +1,10 @@
+signalform-tools (0.0.5) lucid trusty xenial; urgency=low
+
+  * Fix in-line comment stripping in validation
+  * Make signalform.py executable as a script
+
+ -- Antonio Verardi <antonio@yelp.com>  Fri, 26 May 2017 04:05:40 -0700
+
 signalform-tools (0.0.4) lucid trusty; urgency=low
 
   * Add TextNote resource in validation
