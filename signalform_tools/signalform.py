@@ -35,7 +35,9 @@ def parse_args():
         'preflight',
         help='preflight help',
         description='Test your detector.')
-    parser_preflight.add_argument('file', help='Path to tfstate file', type=str)
+    group = parser_preflight.add_mutually_exclusive_group()
+    group.add_argument('--file', help='Path to tfstate file', type=str)
+    group.add_argument('-r', '--remote', action='store_true', default=False, help='Use remote state')
     parser_preflight.add_argument('--label', help='Specific detect label to test, checks all in the current folder by default', type=str)
     parser_preflight.add_argument('--start', help='Start time to check from. Can be either SignalFx relative time format (e.g. "-60m", "-3d", "-1w"), a date or a UNIX epoch timestamp in seconds or milliseconds', type=str)
     parser_preflight.add_argument('--stop', help='End time to check until. Can be either SignalFx relative time format (e.g. "Now", "-60m", "-3d"), a date or a UNIX epoch timestamp in seconds or milliseconds', type=str)
@@ -46,6 +48,7 @@ def parse_args():
         help='show help',
         description="Show resources inside the \
             tfstate of the current directory.")
+    parser_show.add_argument('-r', '--remote', action='store_true', default=False, help='Use remote state')
     parser_show.set_defaults(func=show_signalform)
 
     return parser.parse_args()

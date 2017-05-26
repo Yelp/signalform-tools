@@ -2,6 +2,7 @@
 import codecs
 import datetime
 import json
+import os
 import re
 import time
 from typing import Dict
@@ -10,6 +11,7 @@ from typing import Tuple
 
 import dateutil.parser
 import requests
+from signalform_tools.utils import download_tfstate
 
 
 SFX_ENDPOINT = 'https://stream.signalfx.com/v2/signalflow/preflight?'
@@ -36,7 +38,9 @@ def extract_program_text(filename: str) -> List[str]:
             program_text = []
             resources = configs['modules'][0]['resources']
             for resource in resources:
-                program_text.append(resources[resource]['primary']['attributes']['program_text'])
+                pattern = re.compile("signalform_detector.*")
+                if pattern.match(resource) is not None:
+                    program_text.append(resources[resource]['primary']['attributes']['program_text'])
             return program_text
         else:
             configs = conf.read()
@@ -162,9 +166,23 @@ def interpret_interval(args) -> Tuple[int, int]:
     return start, stop
 
 
+def preflight(filename, start, stop, label):
+    detectors = extract_program_text(filename)
+    for detector in detectors:
+        if label in detector or label == 'ALL':
+            send_to_sfx(codecs.decode(detector, 'unicode_escape'), start, stop)
+
+
 def preflight_signalform(args):
     start, stop = interpret_interval(args)
-    detectors = extract_program_text(args.file)
-    for detector in detectors:
-        if args.label in detector or args.label == 'ALL':
-            send_to_sfx(codecs.decode(detector, 'unicode_escape'), start, stop)
+
+    if args.file:
+        preflight(args.file, start, stop, args.label)
+    elif args.remote:
+        try:
+            with download_tfstate():
+                preflight("/".join((os.getcwd(), "terraform.tfstate")), start, stop, args.label)
+        except ValueError as err:
+            print(err.args[0])
+    else:
+        print('No file found!')
