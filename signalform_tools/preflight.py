@@ -67,21 +67,11 @@ def send_to_sfx(program_text: str, start: int, stop: int) -> None:
 
 def display_events(text: str) -> None:
     """Display fired and resolved events listed in the SignalFx response"""
-    all_events_pattern = re.compile('event:\s+event\ndata: {.*?data: }', re.DOTALL)
-    total_fired_alerts = 0
-    for elem_match in re.findall(all_events_pattern, text):
-        fired_pattern = re.match(r'.*"is"\s*:\s*"anomalous"', elem_match, re.DOTALL)
-        removed_pattern = re.match(r'.*"is"\s*:\s*"ok"', elem_match, re.DOTALL)
-        timestamp_pattern = re.match(r'.*"timestampMs"\s*:\s*([0-9]+)', elem_match, re.DOTALL)
-        if timestamp_pattern is not None:
-            # convert alert timestamp in ISO time format (local time)
-            timestamp_alert = str(datetime.datetime.fromtimestamp(int(timestamp_pattern.group(1)) // 1000))
-            if fired_pattern is not None:
-                print(f'\nAlert fired at: {timestamp_alert}')
-                total_fired_alerts += 1
-            elif removed_pattern is not None:
-                print(f'Alert resolved at: {timestamp_alert}')
-    print(f'\nExpected total number of triggered alerts: {total_fired_alerts}\n')
+    alert_ids = re.findall('"anomalous"(?:.+\n.+)+"tsId"\s:\s"(.+)"', text)
+    clear_ids = re.findall('"ok"(?:.+\n.+)+"tsId"\s:\s"(.+)"', text)
+
+    print(f'Expected number of triggered alerts: {sum(text.count(id) for id in alert_ids)}')
+    print(f'Expected number of resolved alerts: {sum(text.count(id) for id in clear_ids)}\n')
 
 
 def parse_sfx_now(input_time: str) -> int:
