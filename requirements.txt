@@ -1,4 +1,3 @@
-# Populate this with the exact requirements of your package.
 boto3==1.4.4
 mypy==0.501
 requests==2.12.4
