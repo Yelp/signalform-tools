@@ -1,7 +1,12 @@
 #!/usr/bin/make -f
 # -*- makefile -*-
+
+ifdef PYPI_URL
+DH_PYPI_URL=--pypi-url=$(PYPI_URL)
+endif
+
 %:
 	dh $@ --with python-virtualenv
 
 override_dh_virtualenv:
-	dh_virtualenv --pypi-url='https://pypi.yelpcorp.com/simple' --python /usr/bin/python3.6 --preinstall=pip-custom-platform --pip-tool=pip-custom-platform
+	dh_virtualenv $(DH_PYPI_URL) --python /usr/bin/python3.6 --preinstall=pip-custom-platform --pip-tool=pip-custom-platform

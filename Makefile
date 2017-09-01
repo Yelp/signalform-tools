@@ -4,6 +4,10 @@ PACKAGE_VERSION=$(shell python setup.py --version)
 SYSTEM_PKG_NAME=signalform-tools
 PYTHON_PKG_NAME=$(shell python setup.py --name)
 
+ifdef PYPI_URL
+TOX_PYPI_URL=-i $(PYPI_URL)
+endif
+
 all: test
 
 changelog:
@@ -17,19 +21,20 @@ changelog:
 clean:
 	git clean -fdx -- debian
 	rm -f ./dist
-	make -C yelp_package clean
+	make -C build clean
 	find . -iname '*.pyc' -delete
+	rm -rf .tox
 
 dist:
-	ln -sf yelp_package/dist ./dist
+	ln -sf build/dist ./dist
 
 itest_%: dist
-	make -C yelp_package $@
+	make -C build $@
 
-package: itest_lucid itest_trusty itest_xenial
+package: itest_trusty itest_xenial
 
 tag:
 	git tag v${PACKAGE_VERSION}
 
 test:
-	tox
+	tox $(TOX_PYPI_URL)
