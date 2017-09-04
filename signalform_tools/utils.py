@@ -32,7 +32,7 @@ def download_tfstate():
     transfer = boto3.s3.transfer.S3Transfer(client)
     # Download s3://bucket/key to filename
     try:
-        transfer.download_file(s3_path["bucket"], s3_path["key"], "terraform.tfstate")), tfstate)
+        transfer.download_file(s3_path["bucket"], s3_path["key"], tfstate)
         yield
     except OSError:
         print("Impossible downloading file")
