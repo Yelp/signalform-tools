@@ -1,3 +1,9 @@
+signalform-tools (0.0.8) lucid trusty; urgency=low
+
+  *  Remove yelp-specific stuff
+
+ -- Francesco Di Chiara <fdc@yelp.com>  Mon, 04 Sep 2017 10:28:32 -0700
+
 signalform-tools (0.0.7) lucid; urgency=low
 
   * Update preflight parsing to be compatible with new response format 
