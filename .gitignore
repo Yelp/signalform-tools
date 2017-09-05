@@ -2,8 +2,8 @@
 .*.swp
 .tox
 dist
-build/
 *.pyc
+build/
 __pycache__
 
 signalform_tools.egg-info/

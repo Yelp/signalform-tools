@@ -21,15 +21,15 @@ changelog:
 clean:
 	git clean -fdx -- debian
 	rm -f ./dist
-	make -C build clean
+	make -C pkg clean
 	find . -iname '*.pyc' -delete
 	rm -rf .tox
 
 dist:
-	ln -sf build/dist ./dist
+	ln -sf pkg/dist ./dist
 
 itest_%: dist
-	make -C build $@
+	make -C pkg $@
 
 package: itest_trusty itest_xenial
 
