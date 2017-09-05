@@ -1,29 +1,8 @@
 = signalform-tools
 
-This package was automatically generated. The package maintainer should
-update this README as part of initial setup for the package.
+== Configuring your build
 
-= Versioning and Releasing
-
-== First Time Setup
-
-1. Run `create-dh-virtualenv-package [package-name]`
-2. Implement the package. (See contents of `setup.py` and `signalform_tools`)
-3. Update your integration tests: `$EDITOR yelp_package/itest/ubuntu.sh`
-4. Tell Debian how to call your package's executables: `$EDITOR debian/*.links`
-5. Run `make test` to run your package's tests with tox.
-6. Run `make changelog` to create a Debian changelog (required for tests).
-7. Run `make package` to test the package using Docker.
-
-== First Release
-
-When the repository was created, the version number was set to 0.0.1.
-Follow these steps to release that as your first versioned package.
-
-1. Your changes should all be merged into `master` already.
-2. Run `make package` to test the package using Docker.
-5. Run `make tag` to create the v0.0.1 tag in Git.
-4. Run `git push origin master && git push origin --tags`.
+You can set the PYPI_URL environment varible to make dh-virtualenv and tox install packages from your internal python package index.
 
 == Releasing a New Version
 
