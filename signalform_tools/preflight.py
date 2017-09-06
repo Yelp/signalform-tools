@@ -15,7 +15,7 @@ from signalform_tools.utils import download_tfstate
 
 
 SFX_ENDPOINT = 'https://stream.signalfx.com/v2/signalflow/preflight?'
-SFX_TOKEN = 'XYZ'
+SFX_TOKEN = 'SFX_TOKEN'
 
 # see https://docs.signalfx.com/en/latest/reference/analytics-docs/how-choose-data-resolution.html#data-retention-policies
 SFX_RETENTION_DAYS = 8
