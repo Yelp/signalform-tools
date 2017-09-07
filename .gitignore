@@ -5,5 +5,5 @@ dist
 *.pyc
 build/
 __pycache__
-
+.signalfx.conf
 signalform_tools.egg-info/
