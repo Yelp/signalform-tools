@@ -15,7 +15,8 @@ from signalform_tools.utils import download_tfstate
 
 
 SFX_ENDPOINT = 'https://stream.signalfx.com/v2/signalflow/preflight?'
-SFX_TOKEN = 'XYZ'
+SYSTEM_CONF_PATH = "/etc/signalfx.conf"
+HOME_CONF_SUFFIX = "/.signalfx.conf"
 
 # see https://docs.signalfx.com/en/latest/reference/analytics-docs/how-choose-data-resolution.html#data-retention-policies
 SFX_RETENTION_DAYS = 8
@@ -25,6 +26,20 @@ SFX_TIME_MULT: Dict[str, int] = {
     "d": 24 * 60 * 60 * 1000,
     "w": 7 * 24 * 60 * 60 * 1000,
 }
+
+
+def get_sfx_token() -> str:
+    sfx_token = read_conf(SYSTEM_CONF_PATH)
+    sfx_token = read_conf("".join((os.getcwd(), HOME_CONF_SUFFIX))) or sfx_token
+    return os.getenv('SFX_TOKEN', sfx_token)
+
+
+def read_conf(filename: str) -> str:
+    if os.path.exists(filename):
+        with open(filename) as conf:
+            configs = json.loads(conf.read())
+            return configs.get("auth_token", "")
+    return ""
 
 
 def extract_program_text(filename: str) -> List[str]:
@@ -57,7 +72,7 @@ def send_to_sfx(program_text: str, start: int, stop: int) -> None:
     query_params = f'start={start}&stop={stop}'
     url = SFX_ENDPOINT + query_params
     print(f'Program Text in Detector:\n{program_text}')
-    headers = {'Content-Type': 'text/plain', 'X-SF-Token': SFX_TOKEN}
+    headers = {'Content-Type': 'text/plain', 'X-SF-Token': get_sfx_token()}
     resp = requests.post(url, headers=headers, data=program_text)
     if resp.status_code != 200:
         print(f'ERROR: Received Response:\n {resp.text}\n')
