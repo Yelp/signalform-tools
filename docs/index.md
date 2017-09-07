@@ -8,7 +8,9 @@ signalform-tools is a collection of tools for working with [terraform-provider-s
 
 The Metrics Team at Yelp has built these in order to make managing terraform-provider-signalform a little bit easier. Our intention is to add to this repository as more tools are developed.
 
-We welcome additions and modifications that make managing terraform-provider-tools better for all!
+signalform-tools is not an official SignalFx product, so we do not guarantee a 1:1 mapping between the SignalFx API and the functionalities offered by this repo.
+
+We welcome additions and modifications that make managing terraform-provider-signalform better for all!
 
 Documentation is available [here](https://yelp.github.io/signalform-tools/).
 
@@ -33,10 +35,10 @@ sudo dpkg -i dist/trusty/signalform-tools.deb
 
 ## Usage
 
-signalform-tools has 3 functionalities so far: validate, preflight and show
+signalform-tools has 3 functionalities so far: validate, preflight and show.
 
 ### validate: validates resources inside one or more directories
-```shell
+```
 usage: signalform-tools validate [-h] [--dir DIR] [filenames [filenames ...]]
 
 Validate resources inside one or more directories.
@@ -50,7 +52,7 @@ optional arguments:
 ```
 
 ### preflight: helps testing your detectors
-```shell
+```
 usage: signalform-tools preflight [-h] [--file FILE | -r] [--label LABEL]
                                   [--start START] [--stop STOP]
 
@@ -71,7 +73,7 @@ optional arguments:
 ```
 
 ### show: shows resources inside the tfstate of the current directory
-```shell
+```
 usage: signalform-tools show [-h] [-r]
 
 Show resources inside the tfstate of the current directory.
