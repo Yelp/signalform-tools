@@ -30,7 +30,7 @@ SFX_TIME_MULT: Dict[str, int] = {
 
 def get_sfx_token() -> str:
     sfx_token = read_conf(SYSTEM_CONF_PATH)
-    sfx_token = read_conf("".join((os.getcwd(), HOME_CONF_SUFFIX))) or sfx_token
+    sfx_token = read_conf("".join((os.path.expanduser("~"), HOME_CONF_SUFFIX))) or sfx_token
     return os.getenv('SFX_TOKEN', sfx_token)
 
 
