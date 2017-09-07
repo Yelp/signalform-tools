@@ -101,7 +101,7 @@ pip /path/to/local/checkout/of/signalform-tools/ --no-use-wheel
 
 When you're ready to release a new version, steps to take are:
 
-1. Update the release number in `signalform_tools/__about__.py`. Follow [http://semver.org/](Semantic Versioning)
+1. Update the release number in `signalform_tools/__about__.py`. Follow [Semantic Versioning](http://semver.org/)
 1. Run `make changelog` to add a Debian changelog entry
 1. Commit your changes
 1. Run `make package` to test the package using Docker
