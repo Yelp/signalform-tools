@@ -10,6 +10,9 @@ The Metrics Team at Yelp has built these in order to make managing terraform-pro
 
 We welcome additions and modifications that make managing terraform-provider-tools better for all!
 
+Documentation is available [here](https://yelp.github.io/signalform-tools/).
+
+
 ## Build And Install
 
 If you want to build the package, then run:
@@ -30,9 +33,9 @@ sudo dpkg -i dist/trusty/signalform-tools.deb
 
 ## Usage
 
-signalform-tools has 3 functionalities so far:
+signalform-tools has 3 functionalities so far: validate, preflight and show
 
-1. validate: validates resources inside one or more directories
+### validate: validates resources inside one or more directories
 ```shell
 usage: signalform-tools validate [-h] [--dir DIR] [filenames [filenames ...]]
 
@@ -45,7 +48,8 @@ optional arguments:
   -h, --help  show this help message and exit
   --dir DIR   directory to validate
 ```
-1. preflight: helps testing your detectors
+
+### preflight: helps testing your detectors
 ```shell
 usage: signalform-tools preflight [-h] [--file FILE | -r] [--label LABEL]
                                   [--start START] [--stop STOP]
@@ -65,7 +69,8 @@ optional arguments:
                  format (e.g. "Now", "-60m", "-3d"), a date or a UNIX epoch
                  timestamp in seconds or milliseconds
 ```
-1. show: shows resources inside the tfstate of the current directory
+
+### show: shows resources inside the tfstate of the current directory
 ```shell
 usage: signalform-tools show [-h] [-r]
 
