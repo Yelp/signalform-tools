@@ -1,16 +1,1 @@
-= signalform-tools
-
-== Configuring your build
-
-You can set the PYPI_URL environment varible to make dh-virtualenv and tox install packages from your internal python package index.
-
-== Releasing a New Version
-
-When you're ready to release a new version, steps to take are:
-
-1. Update the release number in `signalform_tools/__about__.py`. Follow [http://semver.org/](Semantic Versioning).
-2. Run `make changelog` to add a Debian changelog entry.
-3. Commit your changes.
-4. Run `make package` to test the package using Docker.
-5. Run `make tag` to create another Git lightweight tag.
-5. Run `git push origin master && git push origin --tags`.
+docs/index.md
