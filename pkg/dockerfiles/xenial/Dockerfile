@@ -32,7 +32,6 @@ RUN apt-get update > /dev/null  && DEBIAN_FRONTEND=noninteractive apt-get -y --n
         python-pip \
         python-pkg-resources \
         python-setuptools \
-        python-tox \
         rpm \
         ruby \
         ruby-dev \
