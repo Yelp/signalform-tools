@@ -1,3 +1,9 @@
+signalform-tools (0.0.11) lucid; urgency=low
+
+  * Remove python-tox from Dockerfiles
+
+ -- Andrew Mason <mason@yelp.com>  Fri, 08 Sep 2017 08:59:50 -0700
+
 signalform-tools (0.0.10) lucid; urgency=low
 
   * Rename build/ to pkg/
