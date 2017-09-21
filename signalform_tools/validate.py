@@ -3,7 +3,6 @@ import os
 import re
 from enum import auto
 from enum import Enum
-from functools import partial
 from functools import reduce
 from itertools import chain
 from typing import Any
@@ -278,16 +277,6 @@ AVAILABLE_RESOURCES: Dict[str, Type[Resource]] = {
 }
 
 
-def find_and_make_resource(available_resources: Dict[str, Type[Resource]], res_type: str, lines: List[str]) -> Resource:
-    """Make a resource out of Terraform configs
-    :raise: ValueError if unrecognized resource
-    """
-    try:
-        return available_resources[res_type].from_config(lines)
-    except KeyError:
-        raise ValueError(f"Unrecognized resource type: {res_type}")
-
-
 RESOURCE_RE = re.compile(r"^resource\s*[\'\"](?P<res_type>\w+)[\'\"]\s*[\'\"](?P<name>\w+)[\'\"]")
 
 
@@ -487,8 +476,11 @@ def parse_resources(tf_conf: IO[Any], available_resources: Dict[str, Type[Resour
     starts = [i for i, t in enumerate(types) if t]
     stanzas = [lines[i:j] for i, j in zip(starts, starts[1:] + [None])]
     types = [t for t in types if t]
-    make_resource = partial(find_and_make_resource, available_resources)
-    resources = [make_resource(t, stanza) for t, stanza in zip(types, stanzas)]
+    resources = [
+        available_resources[t].from_config(stanza)
+        for t, stanza in zip(types, stanzas)
+        if t in available_resources
+    ]
     return resources
 
 
