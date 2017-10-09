@@ -1,3 +1,9 @@
+signalform-tools (0.0.13) lucid; urgency=low
+
+  * Renamed build variable PYPI_URL to CUSTOM_PYPI_URL
+
+ -- Antonio Verardi <antonio@yelp.com>  Mon, 09 Oct 2017 11:28:08 -0700
+
 signalform-tools (0.0.12) lucid; urgency=low
 
   * Make validate ignore unrecognized resources

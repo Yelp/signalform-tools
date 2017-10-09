@@ -27,7 +27,7 @@ The output packages (trusty and xenial) will be placed in the `dist/` folder (e.
 
 You can set environament variables to customize your build:
 
-* `PYPI_URL`: Environment variable to make dh-virtualenv and tox install packages from your internal python package index
+* `CUSTOM_PYPI_URL`: Environment variable to make dh-virtualenv and tox install packages from your internal python package index
 
 Once you built the package, you can just install like:
 ```shell

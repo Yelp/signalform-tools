@@ -4,8 +4,8 @@ PACKAGE_VERSION=$(shell python setup.py --version)
 SYSTEM_PKG_NAME=signalform-tools
 PYTHON_PKG_NAME=$(shell python setup.py --name)
 
-ifdef PYPI_URL
-TOX_PYPI_URL=-i $(PYPI_URL)
+ifdef CUSTOM_PYPI_URL
+TOX_PYPI_URL=-i $(CUSTOM_PYPI_URL)
 endif
 
 all: test itest_trusty itest_xenial
