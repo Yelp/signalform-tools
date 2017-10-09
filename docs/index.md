@@ -14,6 +14,7 @@ We welcome additions and modifications that make managing terraform-provider-sig
 
 Documentation is available [here](https://yelp.github.io/signalform-tools/).
 
+Changelog is avaliable [here](https://github.com/Yelp/signalform-tools/blob/master/debian/changelog).
 
 ## Build And Install
 
