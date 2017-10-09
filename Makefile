@@ -8,7 +8,7 @@ ifdef PYPI_URL
 TOX_PYPI_URL=-i $(PYPI_URL)
 endif
 
-all: test
+all: test itest_trusty itest_xenial
 
 changelog:
 	if [ ! -f debian/changelog ]; then \

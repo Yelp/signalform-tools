@@ -1,0 +1,8 @@
+language: python
+sudo: required
+services:
+      - docker
+install:
+      - pip install tox
+python:
+    - "3.6"
