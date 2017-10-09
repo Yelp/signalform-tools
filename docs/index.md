@@ -1,6 +1,6 @@
 # signalform-tools
 
-[![GitHub version](TODO)](TODO)
+[![GitHub version](https://badge.fury.io/gh/Yelp%2Fsignalform-tools.svg)](https://badge.fury.io/gh/Yelp%2Fsignalform-tools)
 [![Build Status](https://travis-ci.org/Yelp/signalform-tools.svg?branch=master)](https://travis-ci.org/Yelp/signalform-tools)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
