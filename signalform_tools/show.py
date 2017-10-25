@@ -24,10 +24,7 @@ def show(resource):
         res_type = TYPE_MAPPING[resource['type']]
         print(res_type)
         print(resource['primary']['attributes']['name'])
-        url = SIGNALFX_API + res_type + '/' + resource['primary']['attributes']['id']
-        if res_type == 'detector':
-            url += '/edit'
-        print(url + '\n')
+        print(resource['primary']['attributes']['url'] + '\n')
     except KeyError:
         pass
 
