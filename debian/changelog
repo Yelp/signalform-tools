@@ -1,3 +1,9 @@
+signalform-tools (0.0.14) lucid; urgency=low
+
+  * Show command now uses the resource url attribute
+
+ -- Rahul Ravindran <rahulrav@yelp.com>  Thu, 26 Oct 2017 11:01:59 -0700
+
 signalform-tools (0.0.13) lucid; urgency=low
 
   * Renamed build variable PYPI_URL to CUSTOM_PYPI_URL
