@@ -15,6 +15,6 @@ ENV LANG en_US.UTF-8
 # Need Python 3.6
 RUN apt-get update > /dev/null && \
     apt-get install -y --no-install-recommends software-properties-common && \
-    add-apt-repository ppa:fkrull/deadsnakes
+    add-apt-repository ppa:deadsnakes/ppa
 
 WORKDIR /work
