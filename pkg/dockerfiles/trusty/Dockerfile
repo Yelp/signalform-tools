@@ -44,6 +44,7 @@ RUN cd /tmp && \
 
 RUN pip install virtualenv==15.1.0
 
+RUN gem install ffi --no-rdoc --no-ri -v 1.9.18
 RUN gem install fpm
 
 WORKDIR /work
