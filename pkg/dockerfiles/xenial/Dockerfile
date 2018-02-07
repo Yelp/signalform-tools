@@ -43,6 +43,7 @@ RUN cd /tmp && \
     gdebi -n dh-virtualenv*.deb && \
     rm dh-virtualenv_*.deb
 
+RUN gem install ffi --no-rdoc --no-ri -v 1.9.18
 RUN gem install fpm
 
 WORKDIR /work
