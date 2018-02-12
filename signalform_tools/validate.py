@@ -116,17 +116,20 @@ class Detector(SignalFlowResource):
     parsing_rules: Set[ParsingRule] = set()
     validation_rules: Set[ValidationRule] = set()
 
-    def __init__(self, name: str, program_text: str, max_delay: Optional[int]=None, detect_labels: Optional[Set[str]]=None) -> None:
+    def __init__(self, name: str, program_text: str, max_delay: Optional[int]=None, detect_labels: Optional[Set[str]]=None,
+                 runbook_urls: Optional[List[str]]=None) -> None:
         super().__init__("detector", name, program_text, max_delay)
         self.detect_labels = detect_labels or set()
+        self.runbook_urls = runbook_urls or list()
 
     @classmethod
     def from_config(cls, config: List[str]) -> 'Detector':
         properties = cls.parse_config(config)
         detect_labels = {value for key, value in properties if key == "detect_label"}
+        runbook_urls = [value for key, value in properties if key == "runbook_url"]
         fields = dict(properties)
         try:
-            return Detector(fields["name"], fields["program_text"], fields.get("max_delay"), detect_labels)
+            return Detector(fields["name"], fields["program_text"], fields.get("max_delay"), detect_labels, runbook_urls)
         except KeyError as e:
             raise ValueError(f"Required field '{e.args[0]}' missing for detector") from e
 
@@ -377,6 +380,14 @@ def parse_detect_label(line: str) -> Optional[Property]:
     return None
 
 
+@register_parsing_rule(Detector)
+def parse_runbook_url(line: str) -> Optional[Property]:
+    """Parse Runbook Url"""
+    if line.startswith("runbook_url"):
+        return get_kv_config(line)
+    return None
+
+
 @register_validation_rule(Detector)
 def validate_detect_labels(resource: Detector) -> Optional[str]:
     """Warn if detect labels are not in the program text
@@ -385,6 +396,18 @@ def validate_detect_labels(resource: Detector) -> Optional[str]:
     for label in resource.detect_labels:
         if label not in resource.program_text:
             return f"Warning: detect_label:'{label}' not in program_text"
+    return None
+
+
+@register_validation_rule(Detector)
+def validate_runbook_url(resource: Detector) -> Optional[str]:
+    """Warn if runbook_url is not present within detector rules.
+    :return warning message
+    """
+    # ensures presence of some rule in the detector
+    if resource.detect_labels:
+        if len(resource.runbook_urls) != len(resource.detect_labels):
+            return f"Warning: runbook_url is not present for all rules"
     return None
 
 
