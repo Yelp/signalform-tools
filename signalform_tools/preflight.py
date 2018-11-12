@@ -59,7 +59,7 @@ def extract_program_text(filename: str) -> List[str]:
             return program_text
         else:
             configs = conf.read()
-            pattern = re.compile('program_text:.+(?:=>)?\s+\"(.+)\"')
+            pattern = re.compile(r'program_text:.+(?:=>)?\s+\"(.+)\"')
             return re.findall(pattern, configs)
 
 
@@ -82,8 +82,8 @@ def send_to_sfx(program_text: str, start: int, stop: int) -> None:
 
 def display_events(text: str) -> None:
     """Display fired and resolved events listed in the SignalFx response"""
-    alert_ids = re.findall('"anomalous"(?:.+\n.+)+"tsId"\s:\s"(.+)"', text)
-    clear_ids = re.findall('"ok"(?:.+\n.+)+"tsId"\s:\s"(.+)"', text)
+    alert_ids = re.findall(r'"anomalous"(?:.+\n.+)+"tsId"\s:\s"(.+)"', text)
+    clear_ids = re.findall(r'"ok"(?:.+\n.+)+"tsId"\s:\s"(.+)"', text)
 
     print(f'Expected number of triggered alerts: {sum(text.count(id) for id in alert_ids)}')
     print(f'Expected number of resolved alerts: {sum(text.count(id) for id in clear_ids)}\n')

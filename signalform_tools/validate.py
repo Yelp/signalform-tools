@@ -88,7 +88,7 @@ class SignalFlowResource(Resource):
     parsing_rules: Set[ParsingRule] = set()
     validation_rules: Set[ValidationRule] = set()
 
-    def __init__(self, type: str, name: str, program_text: str, max_delay: Optional[int]=None) -> None:
+    def __init__(self, type: str, name: str, program_text: str, max_delay: Optional[int] = None) -> None:
         super().__init__(type, name)
         self.program_text = program_text
         self.max_delay = max_delay
@@ -116,8 +116,8 @@ class Detector(SignalFlowResource):
     parsing_rules: Set[ParsingRule] = set()
     validation_rules: Set[ValidationRule] = set()
 
-    def __init__(self, name: str, program_text: str, max_delay: Optional[int]=None, detect_labels: Optional[Set[str]]=None,
-                 runbook_urls: Optional[List[str]]=None) -> None:
+    def __init__(self, name: str, program_text: str, max_delay: Optional[int] = None, detect_labels: Optional[Set[str]] = None,
+                 runbook_urls: Optional[List[str]] = None) -> None:
         super().__init__("detector", name, program_text, max_delay)
         self.detect_labels = detect_labels or set()
         self.runbook_urls = runbook_urls or list()
@@ -152,7 +152,7 @@ class Chart(SignalFlowResource):
     parsing_rules: Set[ParsingRule] = set()
     validation_rules: Set[ValidationRule] = set()
 
-    def __init__(self, name: str, program_text: str, max_delay: Optional[int]=None) -> None:
+    def __init__(self, name: str, program_text: str, max_delay: Optional[int] = None) -> None:
         super().__init__("chart", name, program_text, max_delay)
 
     @classmethod
