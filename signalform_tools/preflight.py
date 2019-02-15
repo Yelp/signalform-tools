@@ -57,6 +57,8 @@ def extract_program_text(filename: str) -> List[str]:
                 if pattern.match(resource) is not None:
                     program_text.append(resources[resource]['primary']['attributes']['program_text'])
             return program_text
+        elif filename.endswith('.preflight'):
+            return [conf.read()]
         else:
             configs = conf.read()
             pattern = re.compile(r'program_text:.+(?:=>)?\s+\"(.+)\"')
