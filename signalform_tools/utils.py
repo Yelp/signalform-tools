@@ -24,11 +24,19 @@ def download_tfstate():
     except FileNotFoundError:
         raise ValueError("Error: missing file {0}".format(tfvars))
 
-    s3_path = {"bucket": d["s3_bucket"], "key": d["s3_key"]} if d.keys() & {'s3_bucket', 's3_key'} else extract_s3_path(d)
+    s3_path = {
+        "bucket": d["s3_bucket"],
+        "key": d["s3_key"],
+    } if d.keys() & {'s3_bucket', 's3_key'} else extract_s3_path(d)
 
     if not s3_path:
         raise ValueError("Error: missing s3 path information {0}".format(tfvars))
-    client = boto3.client('s3', d.get("s3_bucket_region", DEFAULT_REGION), aws_access_key_id=aws_key, aws_secret_access_key=aws_secret_key)
+    client = boto3.client(
+        's3',
+        d.get("s3_bucket_region", DEFAULT_REGION),
+        aws_access_key_id=aws_key,
+        aws_secret_access_key=aws_secret_key,
+    )
     transfer = boto3.s3.transfer.S3Transfer(client)
     # Download s3://bucket/key to filename
     try:

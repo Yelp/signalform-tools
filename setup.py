@@ -17,10 +17,7 @@ setup(
     include_package_data=True,
     install_requires=[
         'boto3',
-        'mypy',
         'requests',
-        'flake8',
-        'pre-commit',
         'python-dateutil'
     ],
     entry_points={
