@@ -63,27 +63,37 @@ def extract_program_text(filename: str) -> List[str]:
             return re.findall(pattern, configs)
 
 
-def send_to_sfx(program_text: str, start: int, stop: int) -> None:
+def send_to_sfx(program_text: str, start: int, stop: int) -> (int, str):
     """Send a POST request to the preflight API and parse results
     :param program_text: detector config in SignalFlow language
     :param start: start time to query from
     :param stop: stop time to query until
+    :returns: (response status code, response text)
     """
     query_params = f'start={start}&stop={stop}'
     url = SFX_ENDPOINT + query_params
-    print(f'Program Text in Detector:\n{program_text}')
     headers = {'Content-Type': 'text/plain', 'X-SF-Token': get_sfx_token()}
     resp = requests.post(url, headers=headers, data=program_text)
-    if resp.status_code != 200:
-        print(f'ERROR: Received Response:\n {resp.text}\n')
-        return
-    display_events(resp.text)
+    return resp.status_code, resp.text
+
+
+def extract_events(text: str) -> (List[str], List[str]):
+    """Extracts event ids from SignalFx's response.
+
+    :param text: response text
+    :returns: (triggered alerts ids list, resolved alert ids list)
+    """
+    alert_ids = re.findall(r'"anomalous"(?:.+\n.+)+"tsId"\s:\s"(.+)"', text)
+    clear_ids = re.findall(r'"ok"(?:.+\n.+)+"tsId"\s:\s"(.+)"', text)
+    return alert_ids, clear_ids
 
 
 def display_events(text: str) -> None:
-    """Display fired and resolved events listed in the SignalFx response"""
-    alert_ids = re.findall(r'"anomalous"(?:.+\n.+)+"tsId"\s:\s"(.+)"', text)
-    clear_ids = re.findall(r'"ok"(?:.+\n.+)+"tsId"\s:\s"(.+)"', text)
+    """Display fired and resolved events listed in the SignalFx response.
+
+    :param text: response text
+    """
+    alert_ids, clear_ids = extract_events(text)
 
     print(f'Expected number of triggered alerts: {sum(text.count(id) for id in alert_ids)}')
     print(f'Expected number of resolved alerts: {sum(text.count(id) for id in clear_ids)}\n')
@@ -175,7 +185,12 @@ def preflight(filename, start, stop, label):
     detectors = extract_program_text(filename)
     for detector in detectors:
         if label in detector or label == 'ALL':
-            send_to_sfx(codecs.decode(detector, 'unicode_escape'), start, stop)
+            print(f'Program Text in Detector:\n{detector}')
+            status_code, text = send_to_sfx(codecs.decode(detector, 'unicode_escape'), start, stop)
+            if status_code != 200:
+                print(f'ERROR: Received Response:\n {text}\n')
+                return
+            display_events(text)
 
 
 def preflight_signalform(args):
