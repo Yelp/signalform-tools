@@ -6,5 +6,10 @@ services:
     - docker
 install:
     - pip install tox
+env:
+    - TARGET=test
+    - TARGET=itest_trusty
+    - TARGET=itest_xenial
+    - TARGET=itest_bionic
 script:
-    - make
+    - make $TARGET
