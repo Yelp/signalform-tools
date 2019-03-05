@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -e
+
 cd /
 
 highlight() {
@@ -22,11 +24,13 @@ source /etc/lsb-release
 
 # This will set us up to install our package through apt-get
 highlight "Creating new apt source"
-echo "deb file:/dist/${DISTRIB_CODENAME} ./" | tee "/etc/apt/sources.list.d/itest-${PACKAGE_NAME}.list"
 
 highlight_exec apt-get update
 
 # The package should install ok
-highlight_exec apt-get install -y --force-yes "${PACKAGE_NAME}=${PACKAGE_VERSION}"
+highlight_exec gdebi -n /dist/${DISTRIB_CODENAME}/${PACKAGE_NAME}_${PACKAGE_VERSION}_amd64.deb
+
+
+${PACKAGE_NAME} --version
 
 highlight "$0:" 'success!'
