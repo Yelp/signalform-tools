@@ -38,9 +38,23 @@ def parse_args():
     group = parser_preflight.add_mutually_exclusive_group()
     group.add_argument('--file', help='Path to tfstate file', type=str)
     group.add_argument('-r', '--remote', action='store_true', default=False, help='Use remote state')
-    parser_preflight.add_argument('--label', help='Specific detect label to test, checks all in the current folder by default', type=str)
-    parser_preflight.add_argument('--start', help='Start time to check from. Can be either SignalFx relative time format (e.g. "-60m", "-3d", "-1w"), a date or a UNIX epoch timestamp in seconds or milliseconds', type=str)
-    parser_preflight.add_argument('--stop', help='End time to check until. Can be either SignalFx relative time format (e.g. "Now", "-60m", "-3d"), a date or a UNIX epoch timestamp in seconds or milliseconds', type=str)
+    parser_preflight.add_argument(
+        '--label',
+        help='Specific detect label to test, checks all in the current folder by default',
+        type=str,
+    )
+    parser_preflight.add_argument(
+        '--start',
+        help='Start time to check from. Can be either SignalFx relative time format (e.g. "-60m", "-3d", "-1w"), '
+             'a date or a UNIX epoch timestamp in seconds or milliseconds',
+        type=str,
+    )
+    parser_preflight.add_argument(
+        '--stop',
+        help='End time to check until. Can be either SignalFx relative time format (e.g. "Now", "-60m", "-3d"), '
+             'a date or a UNIX epoch timestamp in seconds or milliseconds',
+        type=str,
+    )
     parser_preflight.set_defaults(func=preflight_signalform)
 
     parser_show = subparsers.add_parser(

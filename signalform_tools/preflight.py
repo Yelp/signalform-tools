@@ -18,7 +18,7 @@ SFX_ENDPOINT = 'https://stream.signalfx.com/v2/signalflow/preflight?'
 SYSTEM_CONF_PATH = "/etc/signalfx.conf"
 HOME_CONF_SUFFIX = "/.signalfx.conf"
 
-# see https://docs.signalfx.com/en/latest/reference/analytics-docs/how-choose-data-resolution.html#data-retention-policies
+# see https://docs.signalfx.com/en/latest/reference/analytics-docs/how-choose-data-resolution.html#data-retention-policies  # noqa
 SFX_RETENTION_DAYS = 8
 SFX_TIME_MULT: Dict[str, int] = {
     "m": 60 * 1000,
@@ -146,14 +146,19 @@ def parse_date(input_time: str) -> int:
 
 
 def extract_timestamp(input_time: str) -> int:
-    "Return timestamp in epoch milliseconds (but rounded to the closest second, as requested by SignalFx) from input time"
+    """Return timestamp in epoch milliseconds (but rounded to the closest
+    second, as requested by SignalFx) from input time.
+    """
     parsers = (parse_sfx_now, parse_sfx_relative_time, parse_timestamp, parse_date)
     for parser in parsers:
         try:
             return parser(input_time)
         except ValueError:
             pass
-    print(f'ERROR: unrecognized time format {input_time}. Please use either SignalFx relative time format, a date or a UNIX epoch timestamp in seconds or milliseconds. ABORTING')
+    print(
+        f'ERROR: unrecognized time format {input_time}. Please use either SignalFx relative '
+        'time format, a date or a UNIX epoch timestamp in seconds or milliseconds. ABORTING'
+    )
     exit(1)
 
 
@@ -176,7 +181,8 @@ def interpret_interval(args) -> Tuple[int, int]:
 
     retention_end = int((datetime.datetime.now() - datetime.timedelta(days=SFX_RETENTION_DAYS)).timestamp() * 1000)
     if start < retention_end:
-        print(f'WARNING: start time is past the highest resolution data retention period ({SFX_RETENTION_DAYS} days). Fired events may differ from what has actually happened in the past.')
+        print(f'WARNING: start time is past the highest resolution data retention period ({SFX_RETENTION_DAYS} days). '
+              'Fired events may differ from what has actually happened in the past.')
 
     return start, stop
 

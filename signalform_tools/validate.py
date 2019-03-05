@@ -116,8 +116,14 @@ class Detector(SignalFlowResource):
     parsing_rules: Set[ParsingRule] = set()
     validation_rules: Set[ValidationRule] = set()
 
-    def __init__(self, name: str, program_text: str, max_delay: Optional[int] = None, detect_labels: Optional[Set[str]] = None,
-                 runbook_urls: Optional[List[str]] = None) -> None:
+    def __init__(
+        self,
+        name: str,
+        program_text: str,
+        max_delay: Optional[int] = None,
+        detect_labels: Optional[Set[str]] = None,
+        runbook_urls: Optional[List[str]] = None,
+    ) -> None:
         super().__init__("detector", name, program_text, max_delay)
         self.detect_labels = detect_labels or set()
         self.runbook_urls = runbook_urls or list()
@@ -129,7 +135,13 @@ class Detector(SignalFlowResource):
         runbook_urls = [value for key, value in properties if key == "runbook_url"]
         fields = dict(properties)
         try:
-            return Detector(fields["name"], fields["program_text"], fields.get("max_delay"), detect_labels, runbook_urls)
+            return Detector(
+                fields["name"],
+                fields["program_text"],
+                fields.get("max_delay"),
+                detect_labels,
+                runbook_urls,
+            )
         except KeyError as e:
             raise ValueError(f"Required field '{e.args[0]}' missing for detector") from e
 
