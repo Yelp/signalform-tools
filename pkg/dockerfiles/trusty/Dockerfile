@@ -12,17 +12,12 @@ RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get -y --no-install-rec
         dpkg-dev \
         equivs \
         gdebi-core \
-        git \
         libcurl4-openssl-dev \
         libyaml-dev \
-        python-dev \
         python3.6-dev \
         python-pip \
         python-pkg-resources \
         python-setuptools \
-        rpm \
-        ruby \
-        ruby-dev \
         wget \
     && apt-get clean
 
@@ -32,8 +27,5 @@ RUN cd /tmp && \
     rm dh-virtualenv_*.deb
 
 RUN pip install virtualenv==15.1.0
-
-RUN gem install ffi --no-rdoc --no-ri -v 1.9.18
-RUN gem install fpm
 
 WORKDIR /work
