@@ -12,9 +12,9 @@ all: test itest_trusty itest_xenial
 
 changelog:
 	if [ ! -f debian/changelog ]; then \
-	    dch -v ${PACKAGE_VERSION} --create --package=$(SYSTEM_PKG_NAME) -D lucid -u low ${ARGS}; \
+	    dch -v ${PACKAGE_VERSION} --create --package=$(SYSTEM_PKG_NAME) -D xenial -u low ${ARGS}; \
 	else \
-	    dch -v ${PACKAGE_VERSION} -D lucid -u low ${ARGS}; \
+	    dch -v ${PACKAGE_VERSION} -D xenial -u low ${ARGS}; \
 	fi
 	git add debian/changelog
 

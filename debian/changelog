@@ -1,3 +1,11 @@
+signalform-tools (0.0.15) xenial; urgency=low
+
+  * Refactored preflight.py to return results rather than just printing them
+    to stdout.
+  * Pinning all dependencies in requirements.txt
+
+ -- Daniele Rolando <drolando@yelp.com>  Mon, 04 Mar 2019 17:07:39 -0800
+
 signalform-tools (0.0.14) lucid; urgency=low
 
   * Show command now uses the resource url attribute
