@@ -1,9 +1,4 @@
-FROM ubuntu:xenial
-
-# Need Python 3.6
-RUN apt-get update && apt-get install -y --no-install-recommends \
-    software-properties-common
-RUN add-apt-repository ppa:deadsnakes/ppa
+FROM ubuntu:bionic
 
 RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get -y --no-install-recommends install \
         build-essential \
@@ -16,13 +11,14 @@ RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get -y --no-install-rec
         libcurl4-openssl-dev \
         libyaml-dev \
         python-dev \
-        python3.6-dev \
+        python3-dev \
         python-pip \
         python-pkg-resources \
         python-setuptools \
         rpm \
         ruby \
         ruby-dev \
+        software-properties-common \
         wget \
     && apt-get clean
 

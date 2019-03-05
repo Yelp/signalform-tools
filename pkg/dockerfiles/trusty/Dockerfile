@@ -1,22 +1,11 @@
 FROM ubuntu:trusty
 
-RUN apt-get update > /dev/null && DEBIAN_FRONTEND=noninteractive apt-get -y --no-install-recommends install \
-        bash \
-        curl \
-        vim-tiny \
-        less > /dev/null \
-    && DEBIAN_FRONTEND=noninteractive apt-get -y dist-upgrade > /dev/null \
-    && apt-get clean > /dev/null
-
-RUN /usr/sbin/locale-gen en_US.UTF-8
-ENV LANG en_US.UTF-8
-
 # Need Python 3.6
-RUN apt-get update > /dev/null && \
-    apt-get install -y --no-install-recommends software-properties-common && \
-    add-apt-repository ppa:deadsnakes/ppa
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    software-properties-common
+RUN add-apt-repository ppa:deadsnakes/ppa
 
-RUN apt-get update > /dev/null && DEBIAN_FRONTEND=noninteractive apt-get -y --no-install-recommends install \
+RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get -y --no-install-recommends install \
         build-essential \
         debhelper \
         devscripts \
@@ -34,8 +23,8 @@ RUN apt-get update > /dev/null && DEBIAN_FRONTEND=noninteractive apt-get -y --no
         rpm \
         ruby \
         ruby-dev \
-        wget > /dev/null \
-    && apt-get clean > /dev/null
+        wget \
+    && apt-get clean
 
 RUN cd /tmp && \
     wget http://mirrors.kernel.org/ubuntu/pool/universe/d/dh-virtualenv/dh-virtualenv_1.0-1_all.deb && \
