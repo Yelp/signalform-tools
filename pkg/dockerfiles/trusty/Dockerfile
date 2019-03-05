@@ -5,6 +5,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     software-properties-common
 RUN add-apt-repository ppa:deadsnakes/ppa
 
+# Don't run apt-get clean since gdebi will need those packages
 RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get -y --no-install-recommends install \
         build-essential \
         debhelper \
@@ -18,8 +19,8 @@ RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get -y --no-install-rec
         python-pip \
         python-pkg-resources \
         python-setuptools \
-        wget \
-    && apt-get clean
+        python-virtualenv \
+        wget
 
 RUN cd /tmp && \
     wget http://mirrors.kernel.org/ubuntu/pool/universe/d/dh-virtualenv/dh-virtualenv_1.0-1_all.deb && \
