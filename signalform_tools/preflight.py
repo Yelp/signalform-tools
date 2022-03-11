@@ -55,12 +55,12 @@ def extract_program_text(filename: str) -> List[str]:
             for resource in resources:
                 pattern = re.compile("signalform_detector.*")
                 if pattern.match(resource) is not None:
-                    program_text.append(resources[resource]['primary']['attributes']['program_text'])
+                    program_text.append(re.sub(r'\n +', '\n', resources[resource]['primary']['attributes']['program_text']))
             return program_text
         else:
             configs = conf.read()
             pattern = re.compile(r'program_text:.+(?:=>)?\s+\"(.+)\"')
-            return re.findall(pattern, configs)
+            return [re.sub(r'\\n +', '\n', pattern_match) for pattern_match in re.findall(pattern, configs)]
 
 
 def send_to_sfx(program_text: str, start: int, stop: int) -> (int, str):
