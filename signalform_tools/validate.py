@@ -419,7 +419,7 @@ def validate_runbook_url(resource: Detector) -> Optional[str]:
     # ensures presence of some rule in the detector
     if resource.detect_labels:
         if len(resource.runbook_urls) != len(resource.detect_labels):
-            return f"Warning: runbook_url is not present for all rules"
+            return "Warning: runbook_url is not present for all rules"
     return None
 
 
@@ -474,7 +474,7 @@ def compact_heredoc(lines: List[str]) -> List[str]:
             return compacted[:-1] + [compacted[-1] + "\n" + line]
         if state == Heredoc.END:
             return compacted
-        raise ValueError(f"Here-doc inputs are not properly delimited")
+        raise ValueError("Here-doc inputs are not properly delimited")
 
     return reduce(compact, enumerate(lines), [])
 

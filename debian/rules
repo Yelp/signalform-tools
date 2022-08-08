@@ -1,12 +1,28 @@
 #!/usr/bin/make -f
 # -*- makefile -*-
 
+export VIRTUALENV_NO_DOWNLOAD=1
+
 ifdef CUSTOM_PYPI_URL
 DH_PYPI_URL=--pypi-url=$(CUSTOM_PYPI_URL)
+endif
+
+# Use the dpkg version comparison algorithm (which is easily in reach) to compare the build
+# system version to the version from which python3-distutils is required (18.04 and higher),
+# and conditionally populate a substitution variable which is referenced in the control file.
+# On bionic, where Ubuntu's python3.8 is used, this is a virtual package for python3-distutils
+# (in bionic-updates). On jammy, this is a real package providing distutils for python3.8 from deadsnakes.
+ifeq ($(shell (. /etc/os-release && dpkg --compare-versions $$VERSION_ID "ge" "18.04" && echo yes || echo no)),yes)
+    extra_substvars = -VbionicOrLater:Depends="python3.8-distutils"
+else
+    extra_substvars = -VbionicOrLater:Depends=""
 endif
 
 %:
 	dh $@ --with python-virtualenv
 
+override_dh_gencontrol:
+	dh_gencontrol -- $(extra_substvars)
+
 override_dh_virtualenv:
-	dh_virtualenv $(DH_PYPI_URL) --python /usr/bin/python3.6 --preinstall=-rrequirements-bootstrap.txt --pip-tool=pip-custom-platform
+	dh_virtualenv $(DH_PYPI_URL) --python /usr/bin/python3.8 --preinstall=-rrequirements-bootstrap.txt

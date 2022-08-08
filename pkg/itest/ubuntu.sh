@@ -28,7 +28,7 @@ highlight "Creating new apt source"
 highlight_exec apt-get update
 
 # The package should install ok
-highlight_exec gdebi -n /dist/${DISTRIB_CODENAME}/${PACKAGE_NAME}_${PACKAGE_VERSION}_amd64.deb
+DEBIAN_FRONTEND="noninteractive" highlight_exec gdebi -n /dist/${DISTRIB_CODENAME}/${PACKAGE_NAME}_${PACKAGE_VERSION}_amd64.deb
 
 
 ${PACKAGE_NAME} --version

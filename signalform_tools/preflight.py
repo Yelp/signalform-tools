@@ -55,7 +55,9 @@ def extract_program_text(filename: str) -> List[str]:
             for resource in resources:
                 pattern = re.compile("signalform_detector.*")
                 if pattern.match(resource) is not None:
-                    program_text.append(re.sub(r'\n +', '\n', resources[resource]['primary']['attributes']['program_text']))
+                    program_text.append(
+                        re.sub(r'\n +', '\n', resources[resource]['primary']['attributes']['program_text']),
+                    )
             return program_text
         else:
             configs = conf.read()
