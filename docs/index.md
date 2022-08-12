@@ -23,7 +23,7 @@ If you want to build the package, then run:
 make package
 ```
 
-The output packages (trusty and xenial) will be placed in the `dist/` folder (e.g. `dist/trusty/signalform-tools-0.0.10_amd64.deb`)
+The output packages will be placed in the `dist/` folder (e.g. `dist/bionic/signalform-tools-0.0.10_amd64.deb`)
 
 You can set environament variables to customize your build:
 
@@ -31,7 +31,7 @@ You can set environament variables to customize your build:
 
 Once you built the package, you can just install like:
 ```shell
-sudo dpkg -i dist/trusty/signalform-tools.deb
+sudo dpkg -i dist/bionic/signalform-tools.deb
 ```
 
 ## Usage
@@ -88,7 +88,7 @@ optional arguments:
 
 If you want to test your changes locally:
 ```shell
-virtualenv -p python3.6 foo
+virtualenv -p python3.8 foo
 source foo/bin/activate
 pip /path/to/local/checkout/of/signalform-tools/ --no-use-wheel
 signalform-tools CMD

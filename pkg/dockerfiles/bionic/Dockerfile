@@ -5,21 +5,18 @@ RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get -y --no-install-rec
         build-essential \
         debhelper \
         devscripts \
+        dh-virtualenv \
         dpkg-dev \
         equivs \
         gdebi-core \
         libcurl4-openssl-dev \
         libyaml-dev \
-        python3-dev \
+        python3.8 \
+        python3.8-dev \
         python-pip \
         python-pkg-resources \
         python-setuptools \
         virtualenv \
         wget
-
-RUN cd /tmp && \
-    wget http://mirrors.kernel.org/ubuntu/pool/universe/d/dh-virtualenv/dh-virtualenv_1.0-1_all.deb && \
-    gdebi -n dh-virtualenv*.deb && \
-    rm dh-virtualenv_*.deb
 
 WORKDIR /work
