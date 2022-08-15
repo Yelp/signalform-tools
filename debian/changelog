@@ -1,3 +1,9 @@
+signalform-tools (0.0.17) bionic; urgency=medium
+
+  * Build for Ubuntu Jammy
+
+ -- Timmy Zhu <tzhu@yelp.com>  Mon, 15 Aug 2022 02:17:50 -0700
+
 signalform-tools (0.0.16) xenial; urgency=low
 
   * No code changes, just need a new version to make Jenkins happy since the
