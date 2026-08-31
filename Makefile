@@ -1,8 +1,8 @@
 .PHONY: all changelog clean package tag test
 
-PACKAGE_VERSION=$(shell python setup.py --version)
+PACKAGE_VERSION=$(shell python3 setup.py --version)
 SYSTEM_PKG_NAME=signalform-tools
-PYTHON_PKG_NAME=$(shell python setup.py --name)
+PYTHON_PKG_NAME=$(shell python3 setup.py --name)
 
 ifdef CUSTOM_PYPI_URL
 TOX_PYPI_URL=-i $(CUSTOM_PYPI_URL)
