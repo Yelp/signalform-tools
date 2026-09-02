@@ -1,8 +1,8 @@
 .PHONY: itest_% package_% test_% build_%_docker clean
 
 SYSTEM_PKG_NAME ?= signalform-tools
-PYTHON_PKG_NAME ?= $(shell cd $(CURDIR)/.. && python setup.py --name)
-PACKAGE_VERSION ?= $(shell cd $(CURDIR)/.. && python setup.py --version)
+PYTHON_PKG_NAME ?= $(shell cd $(CURDIR)/.. && python3 setup.py --name)
+PACKAGE_VERSION ?= $(shell cd $(CURDIR)/.. && python3 setup.py --version)
 
 UID:=`id -u`
 GID:=`id -g`
