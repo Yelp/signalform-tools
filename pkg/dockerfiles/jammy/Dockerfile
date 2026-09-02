@@ -15,9 +15,9 @@ RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get -y --no-install-rec
         gdebi-core \
         libcurl4-openssl-dev \
         libyaml-dev \
-        python3.8 \
-        python3.8-dev \
-        python3.8-distutils \
+        python3.10 \
+        python3.10-dev \
+        python3.10-distutils \
         virtualenv \
         wget
 
