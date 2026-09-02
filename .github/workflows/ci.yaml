@@ -16,7 +16,6 @@ jobs:
       matrix:
         make_target:
           - test
-          - itest_bionic
           - itest_jammy
     steps:
       - uses: actions/checkout@v2
