@@ -1,3 +1,10 @@
+signalform-tools (0.0.18) jammy; urgency=medium
+
+  * Upgrade to python 3.10
+  * Drop bionic support
+
+ -- Ben Bariteau <bariteau@yelp.com>  Wed, 02 Sep 2026 08:04:03 -0700
+
 signalform-tools (0.0.17) bionic; urgency=medium
 
   * Build for Ubuntu Jammy
