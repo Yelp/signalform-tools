@@ -17,6 +17,7 @@ jobs:
         make_target:
           - test
           - itest_jammy
+          - itest_resolute
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-python@v7
