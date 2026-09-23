@@ -21,6 +21,7 @@ PACKAGE_VERSION="$2"
 
 # This will get DISTRIB_CODENAME
 source /etc/lsb-release
+DEB_ARCH=$(dpkg --print-architecture)
 
 # This will set us up to install our package through apt-get
 highlight "Creating new apt source"
@@ -28,7 +29,7 @@ highlight "Creating new apt source"
 highlight_exec apt-get update
 
 # The package should install ok
-DEBIAN_FRONTEND="noninteractive" highlight_exec gdebi -n /dist/${DISTRIB_CODENAME}/${PACKAGE_NAME}_${PACKAGE_VERSION}_amd64.deb
+DEBIAN_FRONTEND="noninteractive" highlight_exec gdebi -n /dist/${DISTRIB_CODENAME}/${PACKAGE_NAME}_${PACKAGE_VERSION}_${DEB_ARCH}.deb
 
 
 ${PACKAGE_NAME} --version
