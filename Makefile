@@ -8,7 +8,7 @@ ifdef CUSTOM_PYPI_URL
 TOX_PYPI_URL=-i $(CUSTOM_PYPI_URL)
 endif
 
-all: test itest_jammy
+all: test itest
 
 changelog:
 	if [ ! -f debian/changelog ]; then \
@@ -31,7 +31,7 @@ dist:
 itest_%: dist
 	make -C pkg $@
 
-package: itest_jammy
+itest: itest_jammy itest_resolute
 
 tag:
 	git tag v${PACKAGE_VERSION}
